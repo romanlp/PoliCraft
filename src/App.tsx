@@ -1,6 +1,7 @@
 import { Component } from "solid-js";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
+import LawsPanel from "./components/LawsPanel";
 
 const App: Component = () => {
   return (
@@ -15,6 +16,7 @@ const App: Component = () => {
 
       {/* Dashboard: Displays core stats */}
       <Dashboard />
+      <LawsPanel />
 
       {/* Placeholder for additional UI panels */}
       <div style="margin-top: 2rem;">
