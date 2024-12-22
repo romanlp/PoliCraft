@@ -1,5 +1,5 @@
 import { createMemo, createSignal } from "solid-js";
-import { BUDGET, HAPPINESS, POPULATION, TAX } from "./config";
+import { BUDGET, HAPPINESS, POPULATION, TAX } from "../config";
 
 // Core Stats (UK Real Data)
 export const [population, setPopulation] = createSignal(POPULATION.initial);

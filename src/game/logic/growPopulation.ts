@@ -1,8 +1,8 @@
-import { POPULATION } from "../state/config";
+import { POPULATION } from "../config";
 import { population, setPopulation } from "../state/gameState";
 
 export function growPopulation() {
-  const growthRate = POPULATION.monthlyGrowthRate; // Monthly growth rate from config
+  const growthRate = POPULATION.monthlyGrowthRate; // Use monthly growth rate from config
   setPopulation((prevPopulation) =>
     Math.floor(prevPopulation * (1 + growthRate))
   );

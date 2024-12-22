@@ -1,4 +1,4 @@
-import { HAPPINESS } from "../state/config";
+import { HAPPINESS } from "../config";
 import {
   budget,
   happiness,
