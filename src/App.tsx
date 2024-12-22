@@ -5,31 +5,16 @@ import LawsPanel from "./components/LawsPanel";
 
 const App: Component = () => {
   return (
-    <div style="padding: 1rem; font-family: Arial, sans-serif; line-height: 1.6;">
-      <header style="margin-bottom: 2rem;">
-        <h1>PoliCraft</h1>
-        <p>
-          Shape the future of your nation by managing policies, budgets, and
-          citizen happiness.
-        </p>
+    <div class="min-h-screen bg-gray-100 text-gray-800">
+      <header class="p-4 bg-blue-600 text-white">
+        <h1 class="text-3xl font-bold">PoliCraft</h1>
       </header>
-
-      {/* Dashboard: Displays core stats */}
-      <Dashboard />
-      <LawsPanel />
-
-      {/* Placeholder for additional UI panels */}
-      <div style="margin-top: 2rem;">
-        <h2>Coming Soon</h2>
-        <ul>
-          <li>Budget Management Panel</li>
-          <li>Laws and Policies Panel</li>
-          <li>Events and Crises</li>
-        </ul>
-      </div>
-
-      <footer style="margin-top: 3rem; font-size: 0.8rem; color: #666;">
-        <p>&copy; 2024 PoliCraft. All rights reserved.</p>
+      <main class="p-4">
+        <Dashboard />
+        <LawsPanel />
+      </main>
+      <footer class="p-4 text-center bg-gray-800 text-white">
+        &copy; 2024 PoliCraft. All rights reserved.
       </footer>
     </div>
   );
