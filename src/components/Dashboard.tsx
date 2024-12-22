@@ -1,4 +1,5 @@
 import { Component } from "solid-js";
+import { advanceTurn } from "../game/logic/advanceTurn";
 import {
   budget,
   happiness,
@@ -16,6 +17,12 @@ const Dashboard: Component = () => {
       <p>Happiness: {happiness()} / 100</p>
       <p>Tax Rate: {taxRate()}%</p>
       <p>Tax Revenue: £{taxRevenue().toLocaleString()}</p>
+      <button
+        class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md"
+        onClick={advanceTurn}
+      >
+        Advance Turn
+      </button>
     </div>
   );
 };
