@@ -4,14 +4,24 @@ import {
   budget,
   happiness,
   population,
+  setActiveEvent,
   setBudget,
   setHappiness,
 } from "../state/gameState";
 import { collectTaxes } from "./collectTaxes";
+import { triggerRandomEvent } from "./eventLogic";
 import { growPopulation } from "./growPopulation";
 
 export function advanceTurn() {
   console.log("Advancing turn...");
+
+  // Trigger a random event
+  const event = triggerRandomEvent();
+
+  if (event) {
+    setActiveEvent(event);
+    console.log(`Event Occurred: ${event.name}`);
+  }
 
   // Collect taxes
   collectTaxes();
