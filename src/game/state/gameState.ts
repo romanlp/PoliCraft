@@ -1,6 +1,6 @@
-import { createMemo, createSignal } from "solid-js";
+import { createSignal } from "solid-js";
 import { BUDGET, HAPPINESS, POPULATION, TAX } from "../config";
-import { Law } from "../data/laws";
+import { Law, LAWS } from "../data/laws";
 
 // Core Stats (UK Real Data)
 export const [population, setPopulation] = createSignal(POPULATION.initial);
@@ -9,10 +9,6 @@ export const [happiness, setHappiness] = createSignal(HAPPINESS.initial);
 export const [taxRate, setTaxRate] = createSignal(TAX.initialRate);
 
 // Laws
-export const [activeLaws, setActiveLaws] = createSignal<Law[]>([]);
-
-// Derived Stats
-export const taxRevenue = createMemo(() => {
-  const monthlyIncome = BUDGET.averageAnnualIncome / 12; // Average monthly income per person
-  return Math.floor(population() * (taxRate() / 100) * monthlyIncome);
-});
+export const [activeLaws, setActiveLaws] = createSignal<Law[]>([
+  LAWS.find((law) => law.id === "tax_rate")!,
+]);

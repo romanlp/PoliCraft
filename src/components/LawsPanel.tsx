@@ -1,7 +1,7 @@
 import { Component, For } from "solid-js";
 import { LAWS } from "../game/data/laws";
 import { passLaw, unpassLaw } from "../game/logic/lawsLogic";
-import { activeLaws } from "../game/state/gameState";
+import { activeLaws, setTaxRate, taxRate } from "../game/state/gameState";
 
 const LawsPanel: Component = () => {
   return (
@@ -48,7 +48,24 @@ const LawsPanel: Component = () => {
                 <div>
                   <h3 class="font-bold text-gray-800">{law.name}</h3>
                   <p class="text-gray-600">{law.description}</p>
-                  <p class="text-sm text-gray-500">Currently Active</p>
+                  {law.id === "tax_rate" && (
+                    <div class="mt-2">
+                      <label for="taxRate" class="text-sm text-gray-500">
+                        Tax Rate: {taxRate()}%
+                      </label>
+                      <input
+                        id="taxRate"
+                        type="range"
+                        min="0"
+                        max="50"
+                        value={taxRate()}
+                        class="w-full"
+                        onInput={(e) =>
+                          setTaxRate(parseInt(e.currentTarget.value))
+                        }
+                      />
+                    </div>
+                  )}
                 </div>
                 <button
                   class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"

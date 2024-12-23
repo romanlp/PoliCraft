@@ -12,6 +12,16 @@ export interface Law {
 
 export const LAWS: Law[] = [
   {
+    id: "tax_rate",
+    name: "Income Tax Policy",
+    description:
+      "Sets the income tax rate, generating revenue for the government.",
+    cost: 0, // No upfront cost for changing the tax rate
+    perTurnEffects: {
+      budget: 0, // Will calculate dynamically based on the tax rate
+    },
+  },
+  {
     id: "basic_income",
     name: "Universal Basic Income",
     description:

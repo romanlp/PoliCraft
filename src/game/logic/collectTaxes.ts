@@ -1,7 +1,13 @@
-import { setBudget, taxRevenue } from "../state/gameState";
+import { activeLaws, population, setBudget, taxRate } from "../state/gameState";
 
 export function collectTaxes() {
-  const revenue = taxRevenue(); // Calculate tax revenue
-  setBudget((prevBudget) => prevBudget + revenue); // Add revenue to budget
+  // Collect taxes
+  const monthlyIncome = 20_000 / 12; // Average monthly income per person
+  const revenue = Math.floor(
+    activeLaws().some((law) => law.id === "tax_rate")
+      ? population() * (taxRate() / 100) * monthlyIncome
+      : 0 // No revenue if tax rate law is inactive
+  );
+  setBudget((prev) => prev + revenue);
   console.log(`Collected £${revenue.toLocaleString()} in taxes.`);
 }

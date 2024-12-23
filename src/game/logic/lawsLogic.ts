@@ -4,6 +4,7 @@ import {
   budget,
   setActiveLaws,
   setBudget,
+  setTaxRate,
 } from "../state/gameState";
 
 export function passLaw(law: Law) {
@@ -27,5 +28,11 @@ export function passLaw(law: Law) {
 
 export function unpassLaw(lawId: string) {
   setActiveLaws((prev) => prev.filter((law) => law.id !== lawId)); // Remove the law from active laws
+
+  // Reset the tax rate to 0 if the tax rate law is unpassed
+  if (lawId === "tax_rate") {
+    setTaxRate(0);
+  }
+
   console.log(`Unpassed law: ${lawId}`);
 }
