@@ -4,7 +4,7 @@ import {
   setHappiness,
   setPopulation,
 } from "../game/state/gameState";
-import { Event } from "../game/types/event.type";
+import { Event } from "../game/types/event.types";
 
 const EventModal: Component<{ event: Event | null; onClose: () => void }> = (
   props

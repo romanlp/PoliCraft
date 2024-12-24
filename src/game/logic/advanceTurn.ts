@@ -1,12 +1,15 @@
 import { HAPPINESS } from "../config";
 import {
-  activeLaws,
+  activePolicies,
   budget,
   happiness,
   population,
   setActiveEvent,
   setBudget,
+  setFeedbackVisible,
   setHappiness,
+  setTurnFeedback,
+  turnFeedback,
 } from "../state/gameState";
 import { collectTaxes } from "./collectTaxes";
 import { triggerRandomEvent } from "./eventLogic";
@@ -14,6 +17,11 @@ import { growPopulation } from "./growPopulation";
 
 export function advanceTurn() {
   console.log("Advancing turn...");
+
+  // Record starting values
+  const startBudget = budget();
+  const startHappiness = happiness();
+  const startPopulation = population();
 
   // Trigger a random event
   const event = triggerRandomEvent();
@@ -35,19 +43,28 @@ export function advanceTurn() {
   );
 
   // Apply per-turn effects from active laws
-  activeLaws().forEach((law) => {
-    if (law?.perTurnEffects?.happiness) {
+  activePolicies().forEach((law) => {
+    if (law?.per_turn_effects?.happiness) {
       setHappiness((prev) =>
-        Math.max(0, Math.min(100, prev + law.perTurnEffects!.happiness!))
+        Math.max(0, Math.min(100, prev + law.per_turn_effects!.happiness!))
       );
     }
-    if (law.perTurnEffects?.budget) {
-      setBudget((prev) => prev + law.perTurnEffects!.budget!);
+    if (law.spending?.base_amount) {
+      setBudget((prev) => prev + law.spending?.base_amount!);
     }
   });
 
-  // Debugging: Log the updated game state
-  console.log(`New Budget: £${budget().toLocaleString()}`);
-  console.log(`New Population: ${population().toLocaleString()}`);
-  console.log(`New Happiness: ${happiness()}/100`);
+  // Record feedback changes
+  const budgetChange = budget() - startBudget;
+  const happinessChange = happiness() - startHappiness;
+  const populationChange = population() - startPopulation;
+
+  setFeedbackVisible(true);
+  setTurnFeedback({
+    budgetChange,
+    happinessChange,
+    populationChange,
+  });
+
+  console.log("Turn feedback set:", turnFeedback);
 }

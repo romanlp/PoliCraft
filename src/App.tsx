@@ -2,7 +2,8 @@ import { Component } from "solid-js";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
 import EventModal from "./components/EventModal";
-import LawsPanel from "./components/LawsPanel";
+import PoliciesPanel from "./components/PoliciesPanel";
+import TurnFeedback from "./components/TurnFeedback";
 import { activeEvent, setActiveEvent } from "./game/state/gameState";
 
 const App: Component = () => {
@@ -12,8 +13,9 @@ const App: Component = () => {
         <h1 class="text-3xl font-bold">PoliCraft</h1>
       </header>
       <main class="p-4">
+        <TurnFeedback />
         <Dashboard />
-        <LawsPanel />
+        <PoliciesPanel />
 
         {/* Show EventModal when there's an active event */}
         {activeEvent() && (
