@@ -3,6 +3,7 @@ import "./App.css";
 import Dashboard from "./components/Dashboard";
 import EventModal from "./components/EventModal";
 import PoliciesPanel from "./components/PoliciesPanel";
+import PopulationDashboard from "./components/PopulationDashboard";
 import TurnFeedback from "./components/TurnFeedback";
 import { activeEvent, setActiveEvent } from "./game/state/gameState";
 
@@ -14,6 +15,7 @@ const App: Component = () => {
       </header>
       <main class="p-4">
         <TurnFeedback />
+        <PopulationDashboard />
         <Dashboard />
         <PoliciesPanel />
 
