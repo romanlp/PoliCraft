@@ -60,13 +60,13 @@ const PoliciesPanel: Component = () => {
       <h3 class="text-lg font-semibold mt-6 mb-2">Active Laws</h3>
       <ul>
         <For each={activePolicies()}>
-          {(law) => (
+          {(policy) => (
             <li class="mb-4 border-b pb-4">
               <div class="flex justify-between items-center">
                 <div>
-                  <h3 class="font-bold text-gray-800">{law.name}</h3>
-                  <p class="text-gray-600">{law.description}</p>
-                  {law.id === "income_tax" && (
+                  <h3 class="font-bold text-gray-800">{policy.name}</h3>
+                  <p class="text-gray-600">{policy.description}</p>
+                  {policy.id === "income_tax" && (
                     <div class="mt-2">
                       <label for="taxRate" class="text-sm text-gray-500">
                         Tax Rate: {taxRate()}%
@@ -84,10 +84,31 @@ const PoliciesPanel: Component = () => {
                       />
                     </div>
                   )}
+
+                  {/* Earning Section */}
+                  {policy.earning && (
+                    <div class="mt-2">
+                      <label class="text-sm text-gray-600">
+                        Revenue: £{policy.earning.base_amount?.toLocaleString()}{" "}
+                        + Scaling
+                      </label>
+                    </div>
+                  )}
+
+                  {/* Spending Section */}
+                  {policy.spending && (
+                    <div class="mt-2">
+                      <label class="text-sm text-gray-600">
+                        Spending: £
+                        {policy.spending.base_amount?.toLocaleString()} +
+                        Scaling
+                      </label>
+                    </div>
+                  )}
                 </div>
                 <button
                   class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-                  onClick={() => unpassPolicy(law.id)}
+                  onClick={() => unpassPolicy(policy.id)}
                 >
                   Unpass Law
                 </button>

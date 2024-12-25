@@ -42,17 +42,42 @@ export function advanceTurn() {
     Math.max(0, prevHappiness - HAPPINESS.decayPerTurn)
   );
 
-  // Apply per-turn effects from active laws
-  activePolicies().forEach((law) => {
-    if (law?.per_turn_effects?.happiness) {
+  let totalSpending = 0;
+  let totalEarning = 0;
+
+  activePolicies().forEach((policy) => {
+    // Apply earning
+    if (policy.earning) {
+      const baseEarning = policy.earning.base_amount || 0;
+      const scaledEarning = policy.earning.scaling_factor
+        ? calculateScaledEffect(policy.earning.scaling_factor)
+        : 0;
+
+      totalEarning += baseEarning + scaledEarning;
+    }
+
+    // Apply spending
+    if (policy.spending) {
+      const baseSpending = policy.spending.base_amount || 0;
+      const scaledSpending = policy.spending.scaling_factor
+        ? calculateScaledEffect(policy.spending.scaling_factor)
+        : 0;
+
+      totalSpending += baseSpending + scaledSpending;
+    }
+    if (policy?.per_turn_effects?.happiness) {
       setHappiness((prev) =>
-        Math.max(0, Math.min(100, prev + law.per_turn_effects!.happiness!))
+        Math.max(0, Math.min(100, prev + policy.per_turn_effects!.happiness!))
       );
     }
-    if (law.spending?.base_amount) {
-      setBudget((prev) => prev + law.spending?.base_amount!);
+    if (policy.spending?.base_amount) {
+      setBudget((prev) => prev + policy.spending?.base_amount!);
     }
   });
+
+  // Update the budget
+  const netChange = totalEarning - totalSpending;
+  setBudget((prev) => prev + netChange);
 
   // Record feedback changes
   const budgetChange = budget() - startBudget;
@@ -67,4 +92,13 @@ export function advanceTurn() {
   });
 
   console.log("Turn feedback set:", turnFeedback);
+}
+
+// Helper function for scaling effects
+function calculateScaledEffect(scalingFactor: {
+  type: "population" | "event_driven" | "gdp";
+  multiplier: number;
+}) {
+  const scalingValue = scalingFactor.type === "population" ? population() : 1; // Replace with event-driven logic if applicable
+  return scalingValue * scalingFactor.multiplier;
 }
