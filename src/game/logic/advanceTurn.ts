@@ -3,7 +3,6 @@ import {
   activePolicies,
   budget,
   happiness,
-  population,
   setActiveEvent,
   setBudget,
   setFeedbackVisible,
@@ -11,6 +10,7 @@ import {
   setTurnFeedback,
   turnFeedback,
 } from "../state/gameState";
+import { totalPopulation } from "../state/populationState";
 import { collectTaxes } from "./collectTaxes";
 import { triggerRandomEvent } from "./eventLogic";
 import { growPopulation } from "./growPopulation";
@@ -21,7 +21,7 @@ export function advanceTurn() {
   // Record starting values
   const startBudget = budget();
   const startHappiness = happiness();
-  const startPopulation = population();
+  const startPopulation = totalPopulation();
 
   // Trigger a random event
   const event = triggerRandomEvent();
@@ -82,7 +82,7 @@ export function advanceTurn() {
   // Record feedback changes
   const budgetChange = budget() - startBudget;
   const happinessChange = happiness() - startHappiness;
-  const populationChange = population() - startPopulation;
+  const populationChange = totalPopulation() - startPopulation;
 
   setFeedbackVisible(true);
   setTurnFeedback({
@@ -99,6 +99,7 @@ function calculateScaledEffect(scalingFactor: {
   type: "population" | "event_driven" | "gdp";
   multiplier: number;
 }) {
-  const scalingValue = scalingFactor.type === "population" ? population() : 1; // Replace with event-driven logic if applicable
+  const scalingValue =
+    scalingFactor.type === "population" ? totalPopulation() : 1; // Replace with event-driven logic if applicable
   return scalingValue * scalingFactor.multiplier;
 }

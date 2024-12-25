@@ -1,5 +1,6 @@
 import { EVENTS } from "../data/events";
-import { setBudget, setHappiness, setPopulation } from "../state/gameState";
+import { setBudget, setHappiness } from "../state/gameState";
+import { setPopulation } from "../state/populationState";
 
 export function triggerRandomEvent() {
   // Filter events based on their probability
@@ -27,7 +28,10 @@ export function triggerRandomEvent() {
       );
     }
     if (event.effects.population !== undefined) {
-      setPopulation((prev) => Math.max(0, prev + event.effects!.population!));
+      setPopulation((prev) => ({
+        ...prev,
+        total: Math.max(0, prev.total + event.effects!.population!),
+      }));
     }
   }
 

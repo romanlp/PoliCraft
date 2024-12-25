@@ -1,9 +1,6 @@
 import { Component, For } from "solid-js";
-import {
-  setBudget,
-  setHappiness,
-  setPopulation,
-} from "../game/state/gameState";
+import { setBudget, setHappiness } from "../game/state/gameState";
+import { setPopulation } from "../game/state/populationState";
 import { Event } from "../game/types/event.types";
 
 const EventModal: Component<{ event: Event | null; onClose: () => void }> = (
@@ -22,7 +19,10 @@ const EventModal: Component<{ event: Event | null; onClose: () => void }> = (
       );
     }
     if (choice.effects.population !== undefined) {
-      setPopulation((prev) => Math.max(0, prev + choice.effects.population!));
+      setPopulation((prev) => ({
+        ...prev,
+        total: Math.max(0, prev.total + choice.effects.population!),
+      }));
     }
 
     // Close the modal after handling the choice

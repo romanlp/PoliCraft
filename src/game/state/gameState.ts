@@ -1,11 +1,10 @@
 import { createSignal } from "solid-js";
-import { BUDGET, HAPPINESS, POPULATION, TAX } from "../config";
+import { BUDGET, HAPPINESS, TAX } from "../config";
 import { POLICIES } from "../data/policies";
 import { Event } from "../types/event.types";
 import { Policy } from "../types/policy.types";
 
 // Core Stats (UK Real Data)
-export const [population, setPopulation] = createSignal(POPULATION.initial);
 export const [budget, setBudget] = createSignal(BUDGET.initial);
 export const [happiness, setHappiness] = createSignal(HAPPINESS.initial);
 export const [taxRate, setTaxRate] = createSignal(TAX.initialRate);
