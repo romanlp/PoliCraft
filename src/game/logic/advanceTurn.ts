@@ -12,6 +12,7 @@ import {
 } from "../state/gameState";
 import { totalPopulation } from "../state/populationState";
 import { collectTaxes } from "./collectTaxes";
+import { calculateIncomeInequality } from "./economy";
 import { triggerRandomEvent } from "./eventLogic";
 import { growPopulation } from "./growPopulation";
 
@@ -22,6 +23,9 @@ export function advanceTurn() {
   const startBudget = budget();
   const startHappiness = happiness();
   const startPopulation = totalPopulation();
+
+  // Recalculate income inequality
+  calculateIncomeInequality();
 
   // Trigger a random event
   const event = triggerRandomEvent();

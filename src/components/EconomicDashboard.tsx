@@ -1,4 +1,9 @@
-import { gdp, taxRevenue, unemploymentRate } from "../game/state/economyState";
+import {
+  gdp,
+  giniCoefficient,
+  taxRevenue,
+  unemploymentRate,
+} from "../game/state/economyState";
 
 const EconomicDashboard = () => {
   return (
@@ -7,6 +12,10 @@ const EconomicDashboard = () => {
       <ul>
         <li>
           <strong>GDP:</strong> £{gdp().toLocaleString()}
+        </li>
+        <li>
+          <strong>Gini Coefficient (Income Inequality):</strong>{" "}
+          {giniCoefficient().toFixed(2)}
         </li>
         <li>
           <strong>Unemployment Rate:</strong>{" "}

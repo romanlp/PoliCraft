@@ -6,7 +6,15 @@ export const [population, setPopulation] = createSignal(INITIAL_POPULATION);
 // Derived Metrics
 export const totalPopulation = createMemo(() => population().total);
 
-export const workforce = createMemo(() => totalPopulation() * 0.65);
+export const workforce = createMemo(
+  () =>
+    totalPopulation() *
+    (1 -
+      population().dependents.children -
+      population().dependents.retirees -
+      population().dependents.stay_at_home_adults)
+);
+
 export const employedPopulation = createMemo(
   () => workforce() * population().workforce.employed.total
 );

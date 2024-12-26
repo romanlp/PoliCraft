@@ -1,11 +1,11 @@
 import { Population } from "../types/population.types";
 
 export const INITIAL_POPULATION: Population = {
-  total: 70_000_000,
+  total: 68_265_000,
   dependents: {
-    children: 0.2, // 20% of total population
-    retirees: 0.15, // 15% of total population
-    stay_at_home_adults: 0.05, // 5% of total population
+    children: 0.19, // 19% of total population
+    retirees: 0.185, // 18.5% of total population
+    stay_at_home_adults: 0.135, // 2% of total population
   },
   workforce: {
     employed: {
@@ -29,7 +29,7 @@ export const INITIAL_POPULATION: Population = {
       },
     },
     unemployed: {
-      total: 0.15, // 15% of workforce
+      total: 0.043, // 15% of workforce
       income_levels: {
         low: 0.7, // 70% of unemployed
         middle: 0.25, // 25% of unemployed

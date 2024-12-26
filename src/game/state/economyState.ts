@@ -29,3 +29,6 @@ export const taxRevenue = createMemo(
     productivityPerWorker() *
     incomeTaxRate()
 );
+
+// Signals to track income inequality
+export const [giniCoefficient, setGiniCoefficient] = createSignal(0.35); // Default Gini coefficient (moderate inequality)
