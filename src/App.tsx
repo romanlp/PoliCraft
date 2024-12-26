@@ -3,23 +3,24 @@ import "./App.css";
 import Dashboard from "./components/Dashboard";
 import EconomicDashboard from "./components/EconomicDashboard";
 import EventModal from "./components/EventModal";
+import { NextTurnButton } from "./components/NextTurnButton";
 import PoliciesPanel from "./components/PoliciesPanel";
 import PopulationDashboard from "./components/PopulationDashboard";
+import TopBar from "./components/TopBar";
 import TurnFeedback from "./components/TurnFeedback";
 import { activeEvent, setActiveEvent } from "./game/state/gameState";
 
 const App: Component = () => {
   return (
-    <div class="min-h-screen bg-gray-100 text-gray-800">
-      <header class="p-4 bg-blue-600 text-white">
-        <h1 class="text-3xl font-bold">PoliCraft</h1>
-      </header>
+    <div class="min-h-screen bg-gray-100 text-gray-800 pt-16">
+      <TopBar />
       <main class="p-4">
         <TurnFeedback />
         <PopulationDashboard />
         <EconomicDashboard />
         <Dashboard />
         <PoliciesPanel />
+        <NextTurnButton />
 
         {/* Show EventModal when there's an active event */}
         {activeEvent() && (
@@ -29,9 +30,6 @@ const App: Component = () => {
           />
         )}
       </main>
-      <footer class="p-4 text-center bg-gray-800 text-white">
-        &copy; 2024 PoliCraft. All rights reserved.
-      </footer>
     </div>
   );
 };
