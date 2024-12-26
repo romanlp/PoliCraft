@@ -1,17 +1,31 @@
 import { createMemo, createSignal } from "solid-js";
+import { SECTORS } from "../data/economy/sectors";
 import {
   employedPopulation,
   selfEmployedPopulation,
   workforce,
 } from "./populationState";
 
+export const [sector, setSector] = createSignal(SECTORS);
+
 // GDP (Gross Domestic Product)
 export const [productivityPerWorker, setProductivityPerWorker] =
   createSignal(50_000); // Annual productivity per worker (£)
-export const gdp = createMemo(
-  () =>
-    (employedPopulation() + selfEmployedPopulation()) * productivityPerWorker()
-);
+
+export const gdp = createMemo(() => {
+  let totalGDP = 0;
+
+  sector().forEach((sector) => {
+    const sectorWorkforce =
+      employedPopulation() * sector.workforce_percentage +
+      selfEmployedPopulation() * sector.workforce_percentage;
+
+    const sectorProductivity = sector.productivity;
+    totalGDP += sectorWorkforce * sectorProductivity;
+  });
+
+  return totalGDP;
+});
 
 // Unemployment Rate
 export const unemploymentRate = createMemo(() => {
