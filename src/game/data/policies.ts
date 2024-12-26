@@ -1,19 +1,10 @@
 import { Policy } from "../types/policy.types";
+import { incomeTax } from "./policies/incomeTax";
+import { vatTax } from "./policies/vatTax";
 
 export const POLICIES: Policy[] = [
-  {
-    id: "income_tax",
-    name: "Income Tax Policy",
-    description: "Generates revenue from citizen incomes.",
-    category: "taxation",
-    earning: {
-      base_amount: 1_000_000_000,
-      scaling_factor: {
-        type: "population",
-        multiplier: 500,
-      },
-    },
-  },
+  incomeTax,
+  vatTax,
   {
     id: "healthcare",
     name: "Healthcare Budget",
