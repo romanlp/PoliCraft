@@ -2,26 +2,38 @@ import { Component, createMemo, Show } from "solid-js";
 import { turnFeedback } from "../game/state/gameState";
 
 const TurnFeedback: Component = () => {
-  const budgetChange = createMemo(() => turnFeedback().budgetChange);
-  const happinessChange = createMemo(() => turnFeedback().happinessChange);
-  const populationChange = createMemo(() => turnFeedback().populationChange);
+  const budgetChange = createMemo(() => turnFeedback()?.budgetChange);
+  const populationChange = createMemo(() => turnFeedback()?.populationChange);
 
   return (
-    <Show when={budgetChange() || happinessChange() || populationChange()}>
+    <Show when={turnFeedback()}>
       <div class="p-4 bg-yellow-100 border border-yellow-300 rounded-lg shadow-md mb-4">
         <h2 class="text-lg font-bold">Turn Summary</h2>
         <ul class="mt-2">
           <li>
-            <strong>Budget Change:</strong> £{budgetChange().toLocaleString()}
+            <strong>GDP Change:</strong> £
+            {turnFeedback()?.gdpChange.toLocaleString()}
           </li>
           <li>
-            <strong>Happiness Change:</strong>{" "}
-            {happinessChange() > 0 ? "+" : ""}
-            {happinessChange()} / 100
+            <strong>Tax Revenue:</strong> £
+            {turnFeedback()?.taxRevenue.toLocaleString()}{" "}
+            <span
+              class={
+                turnFeedback()?.taxChange || 0 >= 0
+                  ? "text-green-600"
+                  : "text-red-600"
+              }
+            >
+              ({turnFeedback()?.taxChange || 0 >= 0 ? "+" : ""}£
+              {turnFeedback()?.taxChange.toLocaleString()})
+            </span>
+          </li>
+          <li>
+            <strong>Budget Change:</strong> £{budgetChange()?.toLocaleString()}
           </li>
           <li>
             <strong>Population Change:</strong>{" "}
-            {populationChange().toLocaleString()}
+            {populationChange()?.toLocaleString()}
           </li>
         </ul>
       </div>

@@ -1,11 +1,10 @@
 import { HAPPINESS } from "../config";
+import { gdp } from "../state/economyState";
 import {
   activePolicies,
   budget,
-  happiness,
   setActiveEvent,
   setBudget,
-  setFeedbackVisible,
   setHappiness,
   setTurnFeedback,
   turnFeedback,
@@ -21,8 +20,8 @@ export function advanceTurn() {
 
   // Record starting values
   const startBudget = budget();
-  const startHappiness = happiness();
   const startPopulation = totalPopulation();
+  const startGdp = gdp();
 
   // Recalculate income inequality
   calculateIncomeInequality();
@@ -85,13 +84,15 @@ export function advanceTurn() {
 
   // Record feedback changes
   const budgetChange = budget() - startBudget;
-  const happinessChange = happiness() - startHappiness;
+  const gdpChange = gdp() - startGdp;
   const populationChange = totalPopulation() - startPopulation;
 
-  setFeedbackVisible(true);
   setTurnFeedback({
+    gdpChange,
     budgetChange,
-    happinessChange,
+    gdpBySector: [],
+    taxRevenue: 0,
+    taxChange: 0,
     populationChange,
   });
 

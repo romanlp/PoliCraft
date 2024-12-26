@@ -17,14 +17,11 @@ export const [activePolicies, setActivePolicies] = createSignal<Policy[]>([
   POLICIES.find((policy) => policy.id === "income_tax")!,
 ]);
 
-export const [feedbackVisible, setFeedbackVisible] =
-  createSignal<boolean>(false);
 export const [turnFeedback, setTurnFeedback] = createSignal<{
-  budgetChange: number;
-  happinessChange: number;
-  populationChange: number;
-}>({
-  budgetChange: 0,
-  happinessChange: 0,
-  populationChange: 0,
-});
+  gdpChange: number; // Change in total GDP
+  budgetChange: number; // Change in budget
+  gdpBySector: { sector: string; value: number }[]; // GDP contribution by sector
+  taxRevenue: number; // Total tax revenue
+  populationChange: number; // Change in total population
+  taxChange: number; // Change in tax revenue
+} | null>(null);
