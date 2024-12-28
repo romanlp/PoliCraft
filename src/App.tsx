@@ -1,5 +1,4 @@
 import { Component } from "solid-js";
-import "./App.css";
 import Dashboard from "./components/Dashboard";
 import EconomicDashboard from "./components/EconomicDashboard";
 import EventModal from "./components/EventModal";
@@ -12,7 +11,7 @@ import { activeEvent, setActiveEvent } from "./game/state/gameState";
 
 const App: Component = () => {
   return (
-    <div class="min-h-screen bg-gray-100 text-gray-800 pt-16">
+    <div class="w-full bg-gray-100 text-gray-800 pt-16">
       <TopBar />
       <main class="p-4">
         <TurnFeedback />
