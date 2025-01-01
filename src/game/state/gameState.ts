@@ -1,8 +1,15 @@
-import { createSignal } from "solid-js";
-import { BUDGET, HAPPINESS, TAX } from "../config";
+import { createMemo, createSignal } from "solid-js";
+import { BUDGET, GAME_SETTINGS, HAPPINESS, TAX } from "../config";
 import { POLICIES } from "../data/policies";
 import { Event } from "../types/event.types";
 import { Policy } from "../types/policy.types";
+
+export const [turn, setTurn] = createSignal(0);
+export const currentDate = createMemo(() => {
+  const initDate = new Date(GAME_SETTINGS.initialDate);
+  return new Date(initDate.setMonth(initDate.getMonth() + turn()));
+});
+export const [enableEvent, setEnableEvent] = createSignal(false);
 
 // Core Stats (UK Real Data)
 export const [budget, setBudget] = createSignal(BUDGET.initial);

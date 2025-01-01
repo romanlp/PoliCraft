@@ -1,5 +1,6 @@
 import { createMemo } from "solid-js";
 import { gdp, taxRevenue } from "../game/state/economyState";
+import { currentDate, turn } from "../game/state/gameState";
 import { totalPopulation } from "../game/state/populationState";
 
 const TopBar = () => {
@@ -14,7 +15,6 @@ const TopBar = () => {
           <h3 class="text-xs font-semibold">GDP</h3>
           <p class="text-md font-bold">£{gdpDisplay().toLocaleString()}B</p>
         </div>
-
         {/* Population */}
         <div class="flex flex-col items-start">
           <h3 class="text-xs font-semibold">Population</h3>
@@ -22,7 +22,6 @@ const TopBar = () => {
             {populationDisplay().toFixed(1).toLocaleString()}M
           </p>
         </div>
-
         {/* Income */}
         <div>
           <h3 class="text-sm font-semibold">Income</h3>
@@ -30,13 +29,21 @@ const TopBar = () => {
             £{taxRevenue().toLocaleString()}
           </p>
         </div>
-
         {/* Expenses */}
         <div>
           <h3 class="text-sm font-semibold">Expenses</h3>
           <p class="text-lg font-bold text-red-400">
             {/* £{spending().toLocaleString()} */}
           </p>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold">
+            {currentDate().toLocaleDateString("en-GB", {
+              month: "short",
+              year: "numeric",
+            })}
+          </h3>
+          <p class="text-lg font-bold text-red-400">{turn()}</p>
         </div>
       </div>
     </div>

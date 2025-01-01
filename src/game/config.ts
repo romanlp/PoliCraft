@@ -1,5 +1,6 @@
 // General Game Settings
 export const GAME_SETTINGS = {
+  initialDate: new Date("2025-01-01"), // Starting date
   turnDuration: "1 month", // Time duration for each turn
 };
 
