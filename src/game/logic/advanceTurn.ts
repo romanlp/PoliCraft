@@ -3,16 +3,16 @@ import { gdp } from "../state/economyState";
 import {
   activePolicies,
   budget,
-  setActiveEvent,
   setBudget,
   setHappiness,
+  setTurn,
   setTurnFeedback,
   turnFeedback,
 } from "../state/gameState";
 import { totalPopulation } from "../state/populationState";
 import { collectTaxes } from "./collectTaxes";
 import { calculateIncomeInequality } from "./economy";
-import { triggerRandomEvent } from "./eventLogic";
+import { handleEvent } from "./eventLogic";
 import { growPopulation } from "./growPopulation";
 
 export function advanceTurn() {
@@ -27,12 +27,7 @@ export function advanceTurn() {
   calculateIncomeInequality();
 
   // Trigger a random event
-  const event = triggerRandomEvent();
-
-  if (event) {
-    setActiveEvent(event);
-    console.log(`Event Occurred: ${event.name}`);
-  }
+  handleEvent();
 
   // Collect taxes
   collectTaxes();
@@ -95,7 +90,7 @@ export function advanceTurn() {
     taxChange: 0,
     populationChange,
   });
-
+  setTurn((prev) => prev + 1);
   console.log("Turn feedback set:", turnFeedback);
 }
 

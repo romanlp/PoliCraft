@@ -1,6 +1,22 @@
 import { EVENTS } from "../data/events";
-import { setBudget, setHappiness } from "../state/gameState";
+import {
+  enableEvent,
+  setActiveEvent,
+  setBudget,
+  setHappiness,
+} from "../state/gameState";
 import { setPopulation } from "../state/populationState";
+
+export function handleEvent() {
+  if (!enableEvent()) return;
+
+  const event = triggerRandomEvent();
+
+  if (event) {
+    setActiveEvent(event);
+    console.log(`Event Occurred: ${event.name}`);
+  }
+}
 
 export function triggerRandomEvent() {
   // Filter events based on their probability
