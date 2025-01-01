@@ -1,4 +1,5 @@
 import { Component } from "solid-js";
+import BudgetPanel from "./components/BudgetPanel";
 import Dashboard from "./components/Dashboard";
 import EconomicDashboard from "./components/EconomicDashboard";
 import EventModal from "./components/EventModal";
@@ -17,6 +18,7 @@ const App: Component = () => {
         <TurnFeedback />
         <PopulationDashboard />
         <EconomicDashboard />
+        <BudgetPanel />
         <Dashboard />
         <PoliciesPanel />
         <NextTurnButton />
