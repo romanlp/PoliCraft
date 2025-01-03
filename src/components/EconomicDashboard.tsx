@@ -1,6 +1,8 @@
 import {
+  adjustedAggregateDemand,
   gdp,
   giniCoefficient,
+  priceLevel,
   taxRevenue,
   unemploymentRate,
 } from "../game/state/economyState";
@@ -23,6 +25,17 @@ const EconomicDashboard = () => {
         </li>
         <li>
           <strong>Tax Revenue:</strong> £{taxRevenue().toLocaleString()}
+        </li>
+        <li>
+          <strong>Price Level:</strong> {priceLevel().toFixed(2)} (Baseline:
+          1.0)
+        </li>
+        <li>
+          <strong>Adjusted Aggregate Demand:</strong> £
+          {adjustedAggregateDemand().toLocaleString()}
+        </li>
+        <li>
+          <strong>GDP (Aggregate Supply):</strong> £{gdp().toLocaleString()}
         </li>
       </ul>
     </div>

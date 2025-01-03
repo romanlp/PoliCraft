@@ -1,4 +1,10 @@
-import { setGiniCoefficient } from "../state/economyState";
+import {
+  adjustedAggregateDemand,
+  gdp,
+  priceLevel,
+  setGiniCoefficient,
+  setPriceLevel,
+} from "../state/economyState";
 import {
   employedPopulation,
   population,
@@ -40,4 +46,17 @@ export function calculateIncomeInequality() {
 
   setGiniCoefficient(gini);
   console.log(`Gini Coefficient: ${gini.toFixed(2)}`);
+}
+
+export function calculatePriceLevel() {
+  const demand = adjustedAggregateDemand();
+  const supply = gdp();
+  const deviation = (demand - supply) / supply;
+
+  // Update price level with dampening factor
+  const adjustmentRate = 0.5; // Prevent rapid fluctuations
+  const newPriceLevel = priceLevel() + deviation * adjustmentRate;
+
+  setPriceLevel(Math.max(0.8, Math.min(newPriceLevel, 2.0))); // Clamp between 0.8 and 2.0
+  console.log(`Price Level Updated: ${newPriceLevel.toFixed(2)}`);
 }

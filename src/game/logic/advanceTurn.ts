@@ -11,7 +11,7 @@ import {
 } from "../state/gameState";
 import { totalPopulation } from "../state/populationState";
 import { collectTaxes } from "./collectTaxes";
-import { calculateIncomeInequality } from "./economy";
+import { calculateIncomeInequality, calculatePriceLevel } from "./economy";
 import { handleEvent } from "./eventLogic";
 import { growPopulation } from "./growPopulation";
 
@@ -25,6 +25,7 @@ export function advanceTurn() {
 
   // Recalculate income inequality
   calculateIncomeInequality();
+  calculatePriceLevel();
 
   // Trigger a random event
   handleEvent();

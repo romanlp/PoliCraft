@@ -5,6 +5,7 @@ import { totalPopulation } from "../game/state/populationState";
 
 const TopBar = () => {
   const gdpDisplay = createMemo(() => Math.floor(gdp() / 1_000_000_000));
+  const incomeDisplay = createMemo(() => taxRevenue() / 1_000_000_000);
   const populationDisplay = createMemo(() => totalPopulation() / 1_000_000);
 
   return (
@@ -26,7 +27,7 @@ const TopBar = () => {
         <div>
           <h3 class="text-sm font-semibold">Income</h3>
           <p class="text-lg font-bold text-green-400">
-            £{taxRevenue().toLocaleString()}
+            £{incomeDisplay().toFixed(2).toLocaleString()}B
           </p>
         </div>
         {/* Expenses */}
@@ -43,7 +44,7 @@ const TopBar = () => {
               year: "numeric",
             })}
           </h3>
-          <p class="text-lg font-bold text-red-400">{turn()}</p>
+          <p class="text-lg font-bold text-red-400">Turn {turn()}</p>
         </div>
       </div>
     </div>
