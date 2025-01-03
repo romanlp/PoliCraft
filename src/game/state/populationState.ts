@@ -6,13 +6,22 @@ export const [population, setPopulation] = createSignal(INITIAL_POPULATION);
 // Derived Metrics
 export const totalPopulation = createMemo(() => population().total);
 
+export const childrenPopulation = createMemo(
+  () => totalPopulation() * population().dependents.children
+);
+
+export const retireesPopulation = createMemo(
+  () => totalPopulation() * population().dependents.retirees
+);
+
 export const workforce = createMemo(
   () =>
     totalPopulation() *
-    (1 -
-      population().dependents.children -
-      population().dependents.retirees -
-      population().dependents.stay_at_home_adults)
+    (1 - population().dependents.children - population().dependents.retirees)
+);
+
+export const dependencyRatio = createMemo(
+  () => (100 * (childrenPopulation() + retireesPopulation())) / workforce()
 );
 
 export const employedPopulation = createMemo(
@@ -22,7 +31,7 @@ export const selfEmployedPopulation = createMemo(
   () => workforce() * population().workforce.self_employed.total
 );
 export const unemployedPopulation = createMemo(
-  () => workforce() * population().workforce.unemployed.total
+  () => workforce() * population().workforce.non_working.unemployed
 );
 
 // Family Roles

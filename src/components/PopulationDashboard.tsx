@@ -1,8 +1,11 @@
 import {
+  childrenPopulation,
   coupleParents,
   couplesWithoutChildren,
+  dependencyRatio,
   employedPopulation,
   population,
+  retireesPopulation,
   selfEmployedPopulation,
   singleParents,
   totalPopulation,
@@ -28,22 +31,21 @@ const PopulationDashboard = () => {
         <h3 class="text-lg font-semibold text-gray-700">Dependents</h3>
         <ul class="mt-2">
           <li>
-            <strong>Children:</strong>{" "}
-            {(
-              population().total * population().dependents.children
-            ).toLocaleString()}
+            <strong>Children:</strong> {childrenPopulation().toLocaleString()}
           </li>
           <li>
-            <strong>Retirees:</strong>{" "}
-            {(
-              population().total * population().dependents.retirees
-            ).toLocaleString()}
+            <strong>Retirees:</strong> {retireesPopulation().toLocaleString()}
           </li>
           <li>
             <strong>Stay-at-Home Adults:</strong>{" "}
             {(
-              population().total * population().dependents.stay_at_home_adults
+              population().total *
+              population().workforce.non_working.stay_at_home
             ).toLocaleString()}
+          </li>
+          <li>
+            <strong>Dependency Ratio:</strong>
+            {dependencyRatio().toLocaleString()}
           </li>
         </ul>
       </div>

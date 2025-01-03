@@ -6,7 +6,6 @@ export const GAME_SETTINGS = {
 
 // Population
 export const POPULATION = {
-  initial: 67_000_000, // Starting population
   annualGrowthRate: 0.003, // 0.3% annual growth
   monthlyGrowthRate: Math.pow(1 + 0.003, 1 / 12) - 1, // Derived monthly growth rate
 };

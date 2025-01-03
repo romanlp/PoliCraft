@@ -3,9 +3,10 @@ export interface Population {
 
   // Dependents
   dependents: {
+    // People aged between 0-14
     children: number; // % of total population
+    // People aged 65+
     retirees: number; // % of total population
-    stay_at_home_adults: number; // % of total population (e.g., caregivers)
   };
 
   // Workforce
@@ -30,8 +31,9 @@ export interface Population {
         high: number; // % of self-employed
       };
     };
-    unemployed: {
-      total: number; // % of workforce
+    non_working: {
+      unemployed: number; // % of workforce actively seeking jobs
+      stay_at_home: number; // % of workforce not actively seeking jobs
       income_levels: {
         low: number; // % of unemployed
         middle: number; // % of unemployed
