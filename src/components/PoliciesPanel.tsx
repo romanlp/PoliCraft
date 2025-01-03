@@ -1,7 +1,8 @@
 import { Component, For } from "solid-js";
 import { POLICIES } from "../game/data/policies";
 import { passPolicy, unpassPolicy } from "../game/logic/lawsLogic";
-import { activePolicies, setTaxRate, taxRate } from "../game/state/gameState";
+import { setTaxRate, taxRate } from "../game/state/gameState";
+import { activePolicies } from "../game/state/policyState";
 
 const groupedPolicies = () => {
   const availablePolicies = POLICIES.filter(

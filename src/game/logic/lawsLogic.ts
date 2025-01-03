@@ -1,10 +1,5 @@
-import {
-  activePolicies,
-  budget,
-  setActivePolicies,
-  setBudget,
-  setTaxRate,
-} from "../state/gameState";
+import { budget, setBudget, setTaxRate } from "../state/gameState";
+import { activePolicies, setActivePolicies } from "../state/policyState";
 import { Policy } from "../types/policy.types";
 
 export function passPolicy(policy: Policy) {

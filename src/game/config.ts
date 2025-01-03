@@ -4,12 +4,6 @@ export const GAME_SETTINGS = {
   turnDuration: "1 month", // Time duration for each turn
 };
 
-// Population
-export const POPULATION = {
-  annualGrowthRate: 0.003, // 0.3% annual growth
-  monthlyGrowthRate: Math.pow(1 + 0.003, 1 / 12) - 1, // Derived monthly growth rate
-};
-
 // Budget
 export const BUDGET = {
   initial: 1_300_000_000_000, // Starting budget in pounds

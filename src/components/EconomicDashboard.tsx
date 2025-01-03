@@ -1,17 +1,27 @@
 import {
   adjustedAggregateDemand,
+  consumerSpending,
   gdp,
   giniCoefficient,
   priceLevel,
   taxRevenue,
   unemploymentRate,
 } from "../game/state/economyState";
+import { policySpending } from "../game/state/policyState";
 
 const EconomicDashboard = () => {
   return (
     <div class="p-4 bg-gray-100 border rounded-lg shadow-md">
       <h2 class="text-lg font-bold mb-4">Economic Overview</h2>
       <ul>
+        <li>
+          <strong>Consumer spending:</strong>
+          {consumerSpending().toLocaleString()}
+        </li>
+        <li>
+          <strong>Government spending:</strong>
+          {policySpending().toLocaleString()}
+        </li>
         <li>
           <strong>GDP:</strong> £{gdp().toLocaleString()}
         </li>

@@ -1,8 +1,6 @@
 import { createMemo, createSignal } from "solid-js";
 import { BUDGET, GAME_SETTINGS, HAPPINESS, TAX } from "../config";
-import { POLICIES } from "../data/policies";
 import { Event } from "../types/event.types";
-import { Policy } from "../types/policy.types";
 
 export const [turn, setTurn] = createSignal(0);
 export const currentDate = createMemo(() => {
@@ -18,11 +16,6 @@ export const [taxRate, setTaxRate] = createSignal(TAX.initialRate);
 
 // Signal to track the currently active event
 export const [activeEvent, setActiveEvent] = createSignal<Event | null>(null);
-
-// Policies
-export const [activePolicies, setActivePolicies] = createSignal<Policy[]>([
-  POLICIES.find((policy) => policy.id === "income_tax")!,
-]);
 
 export const [turnFeedback, setTurnFeedback] = createSignal<{
   gdpChange: number; // Change in total GDP

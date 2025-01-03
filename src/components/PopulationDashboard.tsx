@@ -1,4 +1,5 @@
 import {
+  adultsPopulation,
   childrenPopulation,
   coupleParents,
   couplesWithoutChildren,
@@ -55,19 +56,29 @@ const PopulationDashboard = () => {
         <h3 class="text-lg font-semibold text-gray-700">Workforce</h3>
         <ul class="mt-2">
           <li>
+            <strong>Total Adults:</strong> {adultsPopulation().toLocaleString()}
+          </li>
+          <li>
             <strong>Total Workforce:</strong> {workforce().toLocaleString()}
           </li>
           <li>
             <strong>Employed Population:</strong>{" "}
-            {employedPopulation().toLocaleString()}
+            {employedPopulation().total.toLocaleString()}
           </li>
           <li>
             <strong>Self-Employed Population:</strong>{" "}
-            {selfEmployedPopulation().toLocaleString()}
+            {selfEmployedPopulation().total.toLocaleString()}
+          </li>
+
+          <li>
+            <strong>Total working:</strong>{" "}
+            {(
+              employedPopulation().total + selfEmployedPopulation().total
+            ).toLocaleString()}
           </li>
           <li>
             <strong>Unemployed Population:</strong>{" "}
-            {unemployedPopulation().toLocaleString()}
+            {unemployedPopulation().total.toLocaleString()}
           </li>
         </ul>
       </div>
@@ -79,42 +90,42 @@ const PopulationDashboard = () => {
           <li>
             <strong>Low-Income Employed:</strong>{" "}
             {(
-              employedPopulation() *
+              employedPopulation().total *
               population().workforce.employed.income_levels.low
             ).toLocaleString()}
           </li>
           <li>
             <strong>Middle-Income Employed:</strong>{" "}
             {(
-              employedPopulation() *
+              employedPopulation().total *
               population().workforce.employed.income_levels.middle
             ).toLocaleString()}
           </li>
           <li>
             <strong>High-Income Employed:</strong>{" "}
             {(
-              employedPopulation() *
+              employedPopulation().total *
               population().workforce.employed.income_levels.high
             ).toLocaleString()}
           </li>
           <li>
             <strong>Low-Income Self-Employed:</strong>{" "}
             {(
-              selfEmployedPopulation() *
+              selfEmployedPopulation().total *
               population().workforce.self_employed.income_levels.low
             ).toLocaleString()}
           </li>
           <li>
             <strong>Middle-Income Self-Employed:</strong>{" "}
             {(
-              selfEmployedPopulation() *
+              selfEmployedPopulation().total *
               population().workforce.self_employed.income_levels.middle
             ).toLocaleString()}
           </li>
           <li>
             <strong>High-Income Self-Employed:</strong>{" "}
             {(
-              selfEmployedPopulation() *
+              selfEmployedPopulation().total *
               population().workforce.self_employed.income_levels.high
             ).toLocaleString()}
           </li>

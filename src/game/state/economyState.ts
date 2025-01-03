@@ -1,9 +1,11 @@
 import { createMemo, createSignal } from "solid-js";
 import { SECTORS } from "../data/economy/sectors";
-import { totalSpending } from "./budgetState";
+import { policySpending } from "./policyState";
 import {
   employedPopulation,
+  retireesPopulation,
   selfEmployedPopulation,
+  stayAtHomeAdults,
   unemployedPopulation,
   workforce,
 } from "./populationState";
@@ -20,29 +22,45 @@ export const [businessInvestment, setBusinessInvestment] =
 export const [priceLevel, setPriceLevel] = createSignal(1.0); // Base price level (1.0 = 100% baseline)
 
 export const consumerSpending = createMemo(() => {
-  const lowIncomeConsumptionRate = 0.9; // 90% for low-income
-  const middleIncomeConsumptionRate = 0.7; // 70% for middle-income
-  const highIncomeConsumptionRate = 0.5; // 50% for high-income
+  const lowConsumptionRate = 0.95; // 90% for low-income
+  const midConsumptionRate = 0.8; // 70% for middle-income
+  const highConsumptionRate = 0.6; // 50% for high-income
 
   const lowIncomeSpending =
-    employedPopulation() * 0.6 * 15_000 * lowIncomeConsumptionRate +
-    selfEmployedPopulation() * 0.5 * 15_000 * lowIncomeConsumptionRate +
-    unemployedPopulation() * 0.7 * 10_000 * lowIncomeConsumptionRate;
+    employedPopulation().income_levels.low * 22_000 * lowConsumptionRate +
+    selfEmployedPopulation().income_levels.low * 30_000 * lowConsumptionRate +
+    unemployedPopulation().income_levels.low * 10_000 * lowConsumptionRate;
 
   const middleIncomeSpending =
-    employedPopulation() * 0.3 * 40_000 * middleIncomeConsumptionRate +
-    selfEmployedPopulation() * 0.4 * 40_000 * middleIncomeConsumptionRate;
+    employedPopulation().income_levels.middle * 55_000 * midConsumptionRate +
+    selfEmployedPopulation().income_levels.middle *
+      60_000 *
+      midConsumptionRate +
+    unemployedPopulation().income_levels.middle * 20_000 * midConsumptionRate;
 
   const highIncomeSpending =
-    employedPopulation() * 0.1 * 100_000 * highIncomeConsumptionRate +
-    selfEmployedPopulation() * 0.1 * 100_000 * highIncomeConsumptionRate;
+    employedPopulation().income_levels.high * 125_000 * highConsumptionRate +
+    selfEmployedPopulation().income_levels.high *
+      140_000 *
+      highConsumptionRate +
+    unemployedPopulation().income_levels.high * 80_000 * highConsumptionRate;
 
-  return lowIncomeSpending + middleIncomeSpending + highIncomeSpending;
+  const retiredSpending = retireesPopulation() * 20_000 * lowConsumptionRate;
+
+  const stayAtHomeSpending = stayAtHomeAdults() * 18_000 * lowConsumptionRate;
+
+  return (
+    lowIncomeSpending +
+    middleIncomeSpending +
+    highIncomeSpending +
+    retiredSpending +
+    stayAtHomeSpending
+  );
 });
 
 // Calculate Adjusted Aggregate Demand (AAD)
 export const adjustedAggregateDemand = createMemo(
-  () => consumerSpending() + totalSpending() + businessInvestment()
+  () => consumerSpending() + policySpending() + businessInvestment()
 );
 
 export const gdp = createMemo(() => {
@@ -50,8 +68,8 @@ export const gdp = createMemo(() => {
 
   sector().forEach((sector) => {
     const sectorWorkforce =
-      employedPopulation() * sector.workforce_percentage +
-      selfEmployedPopulation() * sector.workforce_percentage;
+      employedPopulation().total * sector.workforce_percentage +
+      selfEmployedPopulation().total * sector.workforce_percentage;
 
     const sectorProductivity = sector.productivity;
     totalGDP += sectorWorkforce * sectorProductivity;
@@ -64,7 +82,8 @@ export const gdp = createMemo(() => {
 export const unemploymentRate = createMemo(() => {
   const totalWorkforce = workforce(); // Workforce = 65% of total population
   const unemployed =
-    totalWorkforce - (employedPopulation() + selfEmployedPopulation());
+    totalWorkforce -
+    (employedPopulation().total + selfEmployedPopulation().total);
   return unemployed / totalWorkforce;
 });
 
@@ -72,7 +91,7 @@ export const unemploymentRate = createMemo(() => {
 export const [incomeTaxRate, setIncomeTaxRate] = createSignal(0.3); // 30% income tax
 export const taxRevenue = createMemo(
   () =>
-    (employedPopulation() + selfEmployedPopulation()) *
+    (employedPopulation().total + selfEmployedPopulation().total) *
     productivityPerWorker() *
     incomeTaxRate()
 );

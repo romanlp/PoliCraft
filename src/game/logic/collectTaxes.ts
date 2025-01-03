@@ -1,4 +1,5 @@
-import { activePolicies, setBudget, taxRate } from "../state/gameState";
+import { setBudget, taxRate } from "../state/gameState";
+import { activePolicies } from "../state/policyState";
 import { totalPopulation } from "../state/populationState";
 
 export function collectTaxes() {

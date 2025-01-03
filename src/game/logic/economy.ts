@@ -20,19 +20,19 @@ export function calculateIncomeInequality() {
 
   // Population groups
   const lowIncome =
-    employedPopulation() * 0.6 + // 60% of employed
-    selfEmployedPopulation() * 0.5 + // 50% of self-employed
-    unemployedPopulation() * 0.7; // 70% of unemployed
+    employedPopulation().income_levels.low + // 60% of employed
+    selfEmployedPopulation().income_levels.low + // 50% of self-employed
+    unemployedPopulation().income_levels.low; // 70% of unemployed
 
   const middleIncome =
-    employedPopulation() * 0.3 + // 30% of employed
-    selfEmployedPopulation() * 0.4 + // 40% of self-employed
-    unemployedPopulation() * 0.25; // 25% of unemployed
+    employedPopulation().income_levels.middle + // 30% of employed
+    selfEmployedPopulation().income_levels.middle + // 40% of self-employed
+    unemployedPopulation().income_levels.middle; // 25% of unemployed
 
   const highIncome =
-    employedPopulation() * 0.1 + // 10% of employed
-    selfEmployedPopulation() * 0.1 + // 10% of self-employed
-    unemployedPopulation() * 0.05; // 5% of unemployed
+    employedPopulation().income_levels.high + // 10% of employed
+    selfEmployedPopulation().income_levels.high + // 10% of self-employed
+    unemployedPopulation().income_levels.high; // 5% of unemployed
 
   // Calculate inequality based on weighted income shares
   const totalPopulation = population().total;

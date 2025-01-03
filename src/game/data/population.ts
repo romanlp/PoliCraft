@@ -1,14 +1,17 @@
 import { Population } from "../types/population.types";
 
+// 2022 UK Population Estimates
 export const INITIAL_POPULATION: Population = {
-  total: 68_265_000,
+  annualGrowthRate: 0.003, // 0.3% annual growth
+  monthlyGrowthRate: Math.pow(1 + 0.003, 1 / 12) - 1, // Derived monthly growth rate
+  total: 67_596_281,
   dependents: {
     children: 0.172, // 17.2% of total population
     retirees: 0.188, // 18.5% of total population
   },
   workforce: {
     employed: {
-      total: 0.65, // 65% of workforce
+      total: 0.88, // 65% of workforce
       income_levels: {
         low: 0.6, // 60% of employed
         middle: 0.3, // 30% of employed
@@ -20,7 +23,7 @@ export const INITIAL_POPULATION: Population = {
       },
     },
     self_employed: {
-      total: 0.1, // 10% of workforce
+      total: 0.12, // 10% of workforce
       income_levels: {
         low: 0.5, // 50% of self-employed
         middle: 0.4, // 40% of self-employed
@@ -28,7 +31,7 @@ export const INITIAL_POPULATION: Population = {
       },
     },
     non_working: {
-      unemployed: 0.05, // 5% of workforce
+      unemployed: 0.043, // 5% of workforce
       stay_at_home: 0.135, // 13.5% of workforce
       income_levels: {
         low: 0.7, // 70% of unemployed

@@ -1,13 +1,19 @@
-import { createMemo } from "solid-js";
+import { createMemo, createSignal } from "solid-js";
 import { POLICIES } from "../data/policies";
+import { Policy } from "../types/policy.types";
+
+// Policies
+export const [activePolicies, setActivePolicies] = createSignal<Policy[]>([
+  POLICIES.find((policy) => policy.id === "income_tax")!,
+]);
 
 // Filter policies with spending or earning
 export const budgetPolicies = createMemo(() =>
-  POLICIES.filter((policy) => policy.spending || policy.earning)
+  activePolicies().filter((policy) => policy.spending || policy.earning)
 );
 
 // Calculate total spending and earning
-export const totalSpending = createMemo(() =>
+export const policySpending = createMemo(() =>
   budgetPolicies()
     .filter((policy) => policy.spending)
     .reduce((total, policy) => total + (policy.spending?.base_amount || 0), 0)

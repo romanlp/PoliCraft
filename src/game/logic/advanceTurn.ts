@@ -1,7 +1,6 @@
 import { HAPPINESS } from "../config";
 import { gdp } from "../state/economyState";
 import {
-  activePolicies,
   budget,
   setBudget,
   setHappiness,
@@ -9,6 +8,7 @@ import {
   setTurnFeedback,
   turnFeedback,
 } from "../state/gameState";
+import { activePolicies } from "../state/policyState";
 import { totalPopulation } from "../state/populationState";
 import { collectTaxes } from "./collectTaxes";
 import { calculateIncomeInequality, calculatePriceLevel } from "./economy";

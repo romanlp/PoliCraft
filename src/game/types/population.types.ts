@@ -1,4 +1,6 @@
 export interface Population {
+  annualGrowthRate: number;
+  monthlyGrowthRate: number;
   total: number; // Total population
 
   // Dependents
