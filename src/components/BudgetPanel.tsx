@@ -1,8 +1,8 @@
 import { For } from "solid-js";
 import {
   budgetPolicies,
+  policyEarning,
   policySpending,
-  totalEarning,
 } from "../game/state/policyState";
 
 const BudgetPanel = () => {
@@ -55,7 +55,7 @@ const BudgetPanel = () => {
           <strong>Total Spending:</strong>{" "}
           <span
             class={`font-bold ${
-              policySpending() > totalEarning()
+              policySpending() > policyEarning()
                 ? "text-red-600"
                 : "text-green-600"
             }`}
@@ -66,7 +66,7 @@ const BudgetPanel = () => {
         <p>
           <strong>Total Earning:</strong>{" "}
           <span class="text-green-600 font-bold">
-            £{totalEarning().toLocaleString()}
+            £{policyEarning().toLocaleString()}
           </span>
         </p>
       </div>

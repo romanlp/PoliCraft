@@ -10,6 +10,7 @@ export const POLICIES: Policy[] = [
     name: "Healthcare Budget",
     description: "Provides universal healthcare to all citizens.",
     category: "welfare",
+    valueType: "percentage",
     spending: {
       base_amount: 1_500_000_000,
       scaling_factor: {
@@ -17,9 +18,20 @@ export const POLICIES: Policy[] = [
         multiplier: 10,
       },
     },
-    per_turn_effects: {
-      happiness: 10,
-    },
+    effects: [
+      {
+        target: "spending",
+        value: 1_500_000_000, // £1.5 billion base spending
+        type: "scaling",
+        scaling_factor: 10, // £10 per citizen
+        scaling_metric: "population",
+      },
+      {
+        target: "happiness",
+        value: 10, // Fixed happiness boost
+        type: "fixed",
+      },
+    ],
   },
   {
     id: "defense_budget",
@@ -33,9 +45,20 @@ export const POLICIES: Policy[] = [
         multiplier: 10,
       },
     },
-    per_turn_effects: {
-      stability: 10,
-    },
+    effects: [
+      {
+        target: "spending",
+        value: 1_000_000_000, // £1 billion base spending
+        type: "scaling",
+        scaling_factor: 10, // £10 per citizen
+        scaling_metric: "population",
+      },
+      {
+        target: "stability",
+        value: 10, // Fixed stability boost
+        type: "fixed",
+      },
+    ],
   },
   {
     id: "renewable_energy_subsidies",
@@ -50,9 +73,20 @@ export const POLICIES: Policy[] = [
         multiplier: 5,
       },
     },
-    per_turn_effects: {
-      happiness: 3,
-    },
+    effects: [
+      {
+        target: "spending",
+        value: 800_000_000, // £800 million base spending
+        type: "scaling",
+        scaling_factor: 5, // £5 per citizen
+        scaling_metric: "population",
+      },
+      {
+        target: "happiness",
+        value: 3, // Fixed happiness boost
+        type: "fixed",
+      },
+    ],
     prerequisites: [],
   },
   {
@@ -68,9 +102,20 @@ export const POLICIES: Policy[] = [
         multiplier: 150, // £150 per citizen
       },
     },
-    per_turn_effects: {
-      happiness: -4, // Reduced happiness decay
-    },
+    effects: [
+      {
+        target: "revenue",
+        value: 600_000_000, // £600 million base revenue
+        type: "scaling",
+        scaling_factor: 150, // £150 per citizen
+        scaling_metric: "population",
+      },
+      {
+        target: "happiness",
+        value: -4, // Happiness penalty
+        type: "fixed",
+      },
+    ],
     prerequisites: [], // No prerequisites for this policy
   },
   {
@@ -86,10 +131,25 @@ export const POLICIES: Policy[] = [
         multiplier: 2, // £2 per citizen
       },
     },
-    per_turn_effects: {
-      happiness: 5, // Improves happiness
-      population_growth: 0.0005, // Slight increase in population growth
-    },
+    effects: [
+      {
+        target: "spending",
+        value: 400_000_000, // £400 million base spending
+        type: "scaling",
+        scaling_factor: 2, // £2 per citizen
+        scaling_metric: "population",
+      },
+      {
+        target: "happiness",
+        value: 5, // Fixed happiness boost
+        type: "fixed",
+      },
+      {
+        target: "population",
+        value: 0.0005, // Slight population growth boost
+        type: "fixed",
+      },
+    ],
     prerequisites: [], // No prerequisites for this policy
   },
   {
@@ -105,9 +165,20 @@ export const POLICIES: Policy[] = [
         multiplier: 8, // £8 per citizen
       },
     },
-    per_turn_effects: {
-      stability: 5, // Improves stability
-    },
+    effects: [
+      {
+        target: "spending",
+        value: 1_200_000_000, // £1.2 billion base spending
+        type: "scaling",
+        scaling_factor: 8, // £8 per citizen
+        scaling_metric: "population",
+      },
+      {
+        target: "stability",
+        value: 5, // Fixed stability boost
+        type: "fixed",
+      },
+    ],
     prerequisites: [], // No prerequisites for this policy
   },
 ];

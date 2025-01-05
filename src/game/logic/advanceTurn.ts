@@ -14,6 +14,7 @@ import { collectTaxes } from "./collectTaxes";
 import { calculateIncomeInequality, calculatePriceLevel } from "./economy";
 import { handleEvent } from "./eventLogic";
 import { growPopulation } from "./growPopulation";
+import { handlePolicies } from "./policyLogic";
 
 export function advanceTurn() {
   console.log("Advancing turn...");
@@ -35,6 +36,9 @@ export function advanceTurn() {
 
   // Grow population
   growPopulation();
+
+  // Handle all active policies
+  handlePolicies();
 
   // Adjust happiness (example: slight decay per turn)
   setHappiness((prevHappiness) =>
@@ -63,11 +67,6 @@ export function advanceTurn() {
         : 0;
 
       totalSpending += baseSpending + scaledSpending;
-    }
-    if (policy?.per_turn_effects?.happiness) {
-      setHappiness((prev) =>
-        Math.max(0, Math.min(100, prev + policy.per_turn_effects!.happiness!))
-      );
     }
     if (policy.spending?.base_amount) {
       setBudget((prev) => prev + policy.spending?.base_amount!);

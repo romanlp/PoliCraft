@@ -1,8 +1,12 @@
 import { Component, For } from "solid-js";
 import { POLICIES } from "../game/data/policies";
 import { passPolicy, unpassPolicy } from "../game/logic/lawsLogic";
-import { setTaxRate, taxRate } from "../game/state/gameState";
-import { activePolicies } from "../game/state/policyState";
+import { taxRate } from "../game/state/gameState";
+import {
+  activePolicies,
+  getPolicyValue,
+  setPolicyValue,
+} from "../game/state/policyState";
 
 const groupedPolicies = () => {
   const availablePolicies = POLICIES.filter(
@@ -67,10 +71,10 @@ const PoliciesPanel: Component = () => {
                 <div>
                   <h3 class="font-bold text-gray-800">{policy.name}</h3>
                   <p class="text-gray-600">{policy.description}</p>
-                  {policy.id === "income_tax" && (
+                  {policy.valueType === "percentage" && (
                     <div class="mt-2">
                       <label for="taxRate" class="text-sm text-gray-500">
-                        Tax Rate: {taxRate()}%
+                        Value: {getPolicyValue(policy.id)}%
                       </label>
                       <input
                         id="taxRate"
@@ -80,7 +84,10 @@ const PoliciesPanel: Component = () => {
                         value={taxRate()}
                         class="w-full"
                         onInput={(e) =>
-                          setTaxRate(parseInt(e.currentTarget.value))
+                          setPolicyValue(
+                            policy.id,
+                            parseInt(e.currentTarget.value)
+                          )
                         }
                       />
                     </div>
