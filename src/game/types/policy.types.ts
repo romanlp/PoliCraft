@@ -38,24 +38,6 @@ export interface Policy {
   valueType?: "boolean" | "number" | "percentage"; // Type of value the policy holds
   valueRange?: [number, number]; // Min and max values for the policy
 
-  // Revenue generation
-  earning?: {
-    base_amount?: number; // Fixed amount of revenue per turn
-    scaling_factor?: {
-      type: "population" | "gdp"; // What the revenue scales with
-      multiplier: number; // Revenue per unit (e.g., £10 per citizen)
-    };
-  };
-
-  // Spending allocation
-  spending?: {
-    base_amount?: number; // Fixed amount of spending per turn
-    scaling_factor?: {
-      type: "population" | "event_driven"; // What the spending scales with
-      multiplier: number; // Spending per unit (e.g., £50 per citizen)
-    };
-  };
-
   // Recurring effects
   effects?: Effect[]; // Effects applied each turn
 

@@ -6,10 +6,4 @@ export const incomeTax: Policy = {
   description: "Generates revenue from citizen incomes.",
   category: "taxation",
   valueType: "percentage",
-  earning: {
-    scaling_factor: {
-      type: "population",
-      multiplier: 500,
-    },
-  },
 };

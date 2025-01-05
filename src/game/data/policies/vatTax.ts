@@ -7,13 +7,6 @@ export const vatTax: Policy = {
     "Imposes a Value Added Tax on goods and services, generating revenue but increasing consumer prices.",
   category: "taxation",
   valueType: "percentage",
-  earning: {
-    base_amount: 1_000_000_000, // £1 billion per turn
-    scaling_factor: {
-      type: "gdp", // Revenue scales with GDP
-      multiplier: 0.1, // 10% of GDP
-    },
-  },
   effects: [
     {
       type: "scaling",

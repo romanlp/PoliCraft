@@ -1,77 +1,126 @@
-import { For } from "solid-js";
+import { createMemo, For } from "solid-js";
+import { gdp } from "../game/state/economyState";
 import {
-  budgetPolicies,
+  activePolicies,
   policyEarning,
   policySpending,
 } from "../game/state/policyState";
+import { population } from "../game/state/populationState";
+import { Effect } from "../game/types/policy.types";
 
 const BudgetPanel = () => {
+  // Separate policies contributing to earning and spending
+  const earningPolicies = createMemo(() =>
+    activePolicies().filter((policy) =>
+      policy.effects?.some((effect) => effect.target === "revenue")
+    )
+  );
+
+  const spendingPolicies = createMemo(() =>
+    activePolicies().filter((policy) =>
+      policy.effects?.some((effect) => effect.target === "spending")
+    )
+  );
+
   return (
     <div class="p-6 bg-white border rounded-lg shadow-md">
-      <h2 class="text-lg font-bold mb-4">Budget Allocation</h2>
-      <ul>
-        <For each={budgetPolicies()}>
-          {(policy) => (
-            <li class="mb-4">
-              <h3 class="font-semibold text-gray-700">{policy.name}</h3>
-              <p class="text-sm text-gray-500">{policy.description}</p>
+      <h2 class="text-lg font-bold mb-4">Government Budget</h2>
 
-              {policy.spending && (
-                <div class="flex items-center mt-2">
-                  <input
-                    type="range"
-                    min={0}
-                    max={policy.spending.base_amount! * 2} // Allow up to double the base spending
-                    step={100_000_000}
-                    value={policy.spending.base_amount}
-                    class="w-full"
-                    onInput={
-                      (e) =>
-                        (policy.spending!.base_amount = parseInt(
-                          e.currentTarget.value
-                        )) // Adjust policy spending directly
-                    }
-                  />
-                  <span class="ml-4 text-gray-700 font-bold">
-                    £{policy.spending.base_amount?.toLocaleString()}
-                  </span>
-                </div>
-              )}
+      {/* Earnings Section */}
+      <div class="mb-6">
+        <h3 class="text-md font-semibold text-green-600">Earnings</h3>
+        <p>
+          <strong>Total Earnings:</strong>{" "}
+          <span class="text-green-600 font-bold">
+            £{policyEarning().toLocaleString()}
+          </span>
+        </p>
+        <ul class="mt-2">
+          <For each={earningPolicies()}>
+            {(policy) => (
+              <li class="text-sm text-gray-700">
+                <strong>{policy.name}:</strong> £
+                {policy.effects
+                  ?.filter((effect) => effect.target === "revenue")
+                  .reduce(
+                    (total, effect) => total + calculateEffectValue(effect),
+                    0
+                  )
+                  .toLocaleString()}
+              </li>
+            )}
+          </For>
+        </ul>
+      </div>
 
-              {policy.earning && (
-                <div class="flex items-center mt-2">
-                  <span class="text-green-500 font-bold">
-                    Generates £{policy.earning.base_amount?.toLocaleString()}
-                  </span>
-                </div>
-              )}
-            </li>
-          )}
-        </For>
-      </ul>
-      <div class="mt-6">
-        <h3 class="text-md font-semibold">Summary:</h3>
+      {/* Spending Section */}
+      <div>
+        <h3 class="text-md font-semibold text-red-600">Spending</h3>
         <p>
           <strong>Total Spending:</strong>{" "}
-          <span
-            class={`font-bold ${
-              policySpending() > policyEarning()
-                ? "text-red-600"
-                : "text-green-600"
-            }`}
-          >
+          <span class="text-red-600 font-bold">
             £{policySpending().toLocaleString()}
           </span>
         </p>
+        <ul class="mt-2">
+          <For each={spendingPolicies()}>
+            {(policy) => (
+              <li class="text-sm text-gray-700">
+                <strong>{policy.name}:</strong> £
+                {policy.effects
+                  ?.filter((effect) => effect.target === "spending")
+                  .reduce(
+                    (total, effect) => total + calculateEffectValue(effect),
+                    0
+                  )
+                  .toLocaleString()}
+              </li>
+            )}
+          </For>
+        </ul>
+      </div>
+
+      {/* Net Balance */}
+      <div class="mt-6">
+        <h3 class="text-md font-semibold">Net Balance</h3>
         <p>
-          <strong>Total Earning:</strong>{" "}
-          <span class="text-green-600 font-bold">
-            £{policyEarning().toLocaleString()}
+          <span
+            class={`font-bold ${
+              policyEarning() > policySpending()
+                ? "text-green-600"
+                : "text-red-600"
+            }`}
+          >
+            £{(policyEarning() - policySpending()).toLocaleString()}
           </span>
         </p>
       </div>
     </div>
   );
 };
+
+/**
+ * Helper function to calculate the value of a specific effect.
+ */
+function calculateEffectValue(effect: Effect): number {
+  let metricValue = 0;
+
+  if (effect.type === "scaling" && effect.scaling_metric) {
+    metricValue = getMetricValue(effect.scaling_metric);
+  }
+
+  return effect.type === "scaling"
+    ? effect.value + metricValue * (effect.scaling_factor ?? 0)
+    : effect.value;
+}
+
+/**
+ * Retrieves the value of the specified scaling metric.
+ */
+function getMetricValue(metric: string): number {
+  if (metric === "population") return population().total;
+  if (metric === "gdp") return gdp();
+  return 0; // Default fallback
+}
 
 export default BudgetPanel;

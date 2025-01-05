@@ -11,13 +11,6 @@ export const POLICIES: Policy[] = [
     description: "Provides universal healthcare to all citizens.",
     category: "welfare",
     valueType: "percentage",
-    spending: {
-      base_amount: 1_500_000_000,
-      scaling_factor: {
-        type: "population",
-        multiplier: 10,
-      },
-    },
     effects: [
       {
         target: "spending",
@@ -38,13 +31,6 @@ export const POLICIES: Policy[] = [
     name: "Base Defense Budget",
     description: "Funds essential defense operations.",
     category: "security",
-    spending: {
-      base_amount: 1_000_000_000,
-      scaling_factor: {
-        type: "population",
-        multiplier: 10,
-      },
-    },
     effects: [
       {
         target: "spending",
@@ -66,13 +52,6 @@ export const POLICIES: Policy[] = [
     description:
       "Encourages the adoption of renewable energy sources, reducing carbon emissions and improving public satisfaction.",
     category: "infrastructure",
-    spending: {
-      base_amount: 800_000_000,
-      scaling_factor: {
-        type: "population",
-        multiplier: 5,
-      },
-    },
     effects: [
       {
         target: "spending",
@@ -95,13 +74,6 @@ export const POLICIES: Policy[] = [
     description:
       "Generates revenue by taxing corporate profits. May reduce business satisfaction and discourage investments.",
     category: "taxation",
-    earning: {
-      base_amount: 600_000_000, // £600 million per turn
-      scaling_factor: {
-        type: "population",
-        multiplier: 150, // £150 per citizen
-      },
-    },
     effects: [
       {
         target: "revenue",
@@ -124,13 +96,6 @@ export const POLICIES: Policy[] = [
     description:
       "Supports small businesses through financial grants, boosting happiness and encouraging economic growth.",
     category: "economic",
-    spending: {
-      base_amount: 400_000_000, // £400 million per turn
-      scaling_factor: {
-        type: "population",
-        multiplier: 2, // £2 per citizen
-      },
-    },
     effects: [
       {
         target: "spending",
@@ -158,13 +123,6 @@ export const POLICIES: Policy[] = [
     description:
       "Invests in cutting-edge technology research to boost productivity and stability in the long term.",
     category: "infrastructure",
-    spending: {
-      base_amount: 1_200_000_000, // £1.2 billion per turn
-      scaling_factor: {
-        type: "population",
-        multiplier: 8, // £8 per citizen
-      },
-    },
     effects: [
       {
         target: "spending",

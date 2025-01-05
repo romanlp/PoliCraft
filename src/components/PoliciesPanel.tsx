@@ -93,26 +93,21 @@ const PoliciesPanel: Component = () => {
                     </div>
                   )}
 
-                  {/* Earning Section */}
-                  {policy.earning && (
-                    <div class="mt-2">
-                      <label class="text-sm text-gray-600">
-                        Revenue: £{policy.earning.base_amount?.toLocaleString()}{" "}
-                        + Scaling
-                      </label>
-                    </div>
-                  )}
-
-                  {/* Spending Section */}
-                  {policy.spending && (
-                    <div class="mt-2">
-                      <label class="text-sm text-gray-600">
-                        Spending: £
-                        {policy.spending.base_amount?.toLocaleString()} +
-                        Scaling
-                      </label>
-                    </div>
-                  )}
+                  {/* Display policy effects */}
+                  <ul class="mt-2">
+                    <For each={policy.effects}>
+                      {(effect) => (
+                        <li class="text-sm text-gray-600">
+                          <strong>
+                            {effect.target.replace("_", " ").toUpperCase()}:
+                          </strong>{" "}
+                          {effect.type === "scaling"
+                            ? `${effect.value} (scaling with ${effect.scaling_metric})`
+                            : effect.value}
+                        </li>
+                      )}
+                    </For>
+                  </ul>
                 </div>
                 <button
                   class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
